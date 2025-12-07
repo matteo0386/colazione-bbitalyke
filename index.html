@@ -5,182 +5,190 @@
 <title>BB Italyke – Colazione</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- CONFIG PUBLICA + LOGICA ORDINI -->
-<script src="config-public.js"></script>
-<script src="submitOrder_v2.js"></script>
-
 <style>
 :root {
- --primary:#0A84FF; --secondary:#5AC8FA; --accent:#FFD60A;
- --bg:#f4f7fb; --card:#ffffff; --text:#222;
- --radius:18px; --shadow:0 6px 18px rgba(0,0,0,.1);
+ --primary:#0A84FF;
+ --secondary:#5AC8FA;
+ --accent:#FFD60A;
+ --bg:#f4f7fb;
+ --card:#ffffff;
+ --text:#222;
+ --radius:18px;
+ --shadow:0 6px 18px rgba(0,0,0,.1);
 }
+
 @media(prefers-color-scheme:dark){
- :root{--bg:#050816;--card:#111827;--text:#f9fafb;--shadow:0 8px 24px rgba(0,0,0,.45);}
+ :root{
+   --bg:#050816;
+   --card:#111827;
+   --text:#f2f2f7;
+   --shadow:0 8px 24px rgba(0,0,0,.45);
+ }
 }
+
 body{
- background:var(--bg);margin:0;padding:0;
+ margin:0;padding:0;
+ background:var(--bg);
  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial;
  color:var(--text);
 }
-.container{max-width:430px;margin:auto;padding:20px;}
-h1{text-align:center;font-size:30px;margin-bottom:5px;color:var(--primary);font-weight:800;}
-.subtitle{text-align:center;font-size:15px;margin-bottom:22px;color:#666;}
+
+.container{
+ max-width:430px;
+ margin:auto;
+ padding:20px;
+}
+
+h1{
+ text-align:center;
+ font-size:32px;
+ margin-bottom:0;
+ color:var(--primary);
+ font-weight:800;
+}
+
+.subtitle{
+ text-align:center;
+ font-size:15px;
+ margin-bottom:22px;
+ color:#888;
+}
+
 .card{
- background:var(--card);padding:18px;margin-bottom:18px;
- border-radius:var(--radius);box-shadow:var(--shadow);
- opacity:0;transform:translateY(20px);animation:fadeIn .6s forwards;
+ background:var(--card);
+ padding:18px;
+ margin-bottom:18px;
+ border-radius:var(--radius);
+ box-shadow:var(--shadow);
+ transform:scale(0.98);
+ animation:fadeIn .5s forwards;
 }
-@keyframes fadeIn{to{opacity:1;transform:translateY(0);}}
-h2{margin:0 0 10px;font-size:20px;color:var(--primary);font-weight:700;}
+
+@keyframes fadeIn { to { transform:scale(1); opacity:1; } }
+
+h2{
+ margin:0 0 10px;
+ font-size:20px;
+ color:var(--primary);
+}
+
 .row{
- display:flex;justify-content:space-between;align-items:center;
- padding:8px 0;border-bottom:1px solid #e5e7eb;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:8px 0;
+ border-bottom:1px solid #e5e7eb22;
 }
-.row:last-child{border-bottom:none;}
-.label{width:60%;font-size:16px;}
-.qty-box{display:flex;align-items:center;gap:6px;}
+
+.row:last-child{ border-bottom:none; }
+
+.label{ width:60%; }
+
+.qty-box{
+ display:flex;
+ align-items:center;
+ gap:6px;
+}
+
 button.pm{
- width:32px;height:32px;border-radius:50%;border:none;
+ width:32px;
+ height:32px;
+ border-radius:50%;
+ border:none;
  background:linear-gradient(135deg,var(--secondary),var(--primary));
- color:white;font-size:18px;font-weight:700;cursor:pointer;
+ color:white;
+ font-size:20px;
+ font-weight:800;
+ cursor:pointer;
 }
+
 input.qty{
- width:48px;padding:6px;font-size:16px;border-radius:8px;
- border:2px solid var(--secondary);text-align:center;
+ width:48px;
+ padding:6px;
+ font-size:16px;
+ text-align:center;
+ border-radius:10px;
+ border:2px solid var(--secondary);
 }
-input[type=text],select{
- width:100%;max-width:280px;padding:10px;font-size:16px;
- border-radius:12px;border:2px solid var(--secondary);background:white;
+
+input[type=text], select{
+ width:100%;
+ padding:12px;
+ margin-bottom:12px;
+ border-radius:12px;
+ border:2px solid var(--secondary);
+ background:white;
+ font-size:16px;
 }
+
 #invio{
- width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);
- color:white;padding:16px;border:none;border-radius:999px;
- font-size:20px;font-weight:800;cursor:pointer;margin-top:20px;
+ width:100%;
+ padding:18px;
+ background:linear-gradient(135deg,#22c55e,#16a34a);
+ color:white;
+ font-size:20px;
+ font-weight:800;
+ border:none;
+ border-radius:999px;
+ margin-top:15px;
+ cursor:pointer;
 }
-#okMsg{
- display:none;text-align:center;font-size:20px;font-weight:700;
- color:#22c55e;margin-top:20px;
+
+#invio:active{
+ transform:scale(0.97);
 }
+
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<h1>BB Italyke – Colazione</h1>
-<p class="subtitle">Seleziona ciò che desideri</p>
+<h1>BB Italyke</h1>
+<p class="subtitle">Ordina la tua colazione</p>
 
 <div class="card">
-<h2>Ospite</h2>
+<h2>Dati Ospite</h2>
 
 <label>Nome</label>
 <input type="text" id="nome">
 
 <label>Camera</label>
 <select id="camera">
-<option value="">Seleziona</option>
-<option value="Euterpe">Euterpe</option>
-<option value="Talia">Talia</option>
-<option value="Tersicore">Tersicore</option>
-<option value="Erato">Erato</option>
+ <option value="">Seleziona</option>
+ <option value="Euterpe">Euterpe</option>
+ <option value="Talia">Talia</option>
+ <option value="Tersicore">Tersicore</option>
+ <option value="Erato">Erato</option>
 </select>
 
 <label>Orario</label>
 <select id="orario">
-<option value="">Seleziona</option>
-<option value="08:00">08:00</option>
-<option value="09:00">09:00</option>
+ <option value="">Seleziona</option>
+ <option value="08:00">08:00</option>
+ <option value="09:00">09:00</option>
 </select>
 
 </div>
-<!-- GENERATORE CATEGORIE -->
+
 <script>
 function categoria(titolo, items){
-  let html = `<div class='card'><h2>${titolo}</h2>`;
-  items.forEach(([label, id])=>{
-    html += `
-      <div class='row'>
-        <span class='label'>${label}</span>
-        <div class='qty-box'>
-          <button type='button' class='pm' onclick="dec('${id}')">−</button>
-          <input type='number' class='qty' id='${id}' value='0' min='0'>
-          <button type='button' class='pm' onclick="inc('${id}')">+</button>
-        </div>
-      </div>`;
-  });
-  html += `</div>`;
-  return html;
+ let html = `<div class='card'><h2>${titolo}</h2>`;
+ items.forEach(([label, id])=>{
+   html += `
+     <div class='row'>
+       <span class='label'>${label}</span>
+       <div class='qty-box'>
+         <button type='button' class='pm' onclick="dec('${id}')">−</button>
+         <input type='number' class='qty' id='${id}' value='0'>
+         <button type='button' class='pm' onclick="inc('${id}')">+</button>
+       </div>
+     </div>`;
+ });
+ html += `</div>`;
+ return html;
 }
-</script>
 
-<div id="menuArea"></div>
-
-<script>
-// DEFINIZIONE CATEGORIE E PRODOTTI
-const sezioni = {
-"Bevande Calde":[
-["Caffè espresso","qtyCaffeEspresso"],
-["Caffè Americano","qtyCaffeAmericano"],
-["Tè","qtyThe"],
-["Cioccolata calda","qtyCioccolataCalda"],
-["Cappuccino","qtyCappuccino"],
-["Cappuccino Soia","qtyCappuccinoSoia"],
-["Cappuccino No Lattosio","qtyCappuccinoNoLattosio"],
-["Latte caldo","qtyLatteCaldo"],
-["Latte di Soia","qtyLatteSoiaCaldo"],
-["Latte No Lattosio","qtyLatteNoLattosioCaldo"]
-],
-"Bevande Fredde":[
-["Latte","qtyLatteFreddo"],
-["Latte di Soia","qtyLatteSoiaFreddo"],
-["Latte No Lattosio","qtyLatteNoLattosioFreddo"],
-["Succo arancia","qtySuccoArancio"],
-["Succo ananas","qtySuccoAnanas"],
-["Succo frutti rossi","qtySuccoFruttiRossi"]
-],
-"Yogurt":[
-["Yogurt bianco","qtyYogurtBianco"],
-["Yogurt ai frutti","qtyYogurtFrutti"]
-],
-"Dolci":[
-["Cornetto","qtyCornetto"],
-["Dolce artigianale","qtyDolceArtigianale"],
-["Fette biscottate","qtyFetteBiscottate"],
-["Burro","qtyBurro"],
-["Marmellata","qtyMarmellata"],
-["Nutella","qtyNutella"],
-["Cereali","qtyCereali"]
-],
-"Salati":[
-["Uova bollite","qtyUovaBollite"],
-["Uova strapazzate","qtyUovaStrapazzate"],
-["Salumi","qtySalumi"],
-["Formaggio","qtyFormaggio"],
-["Pane","qtyPane"],
-["Focaccia","qtyFocaccia"]
-],
-"Frutta":[
-["Frutta fresca","qtyFruttaFresca"]
-],
-"Richieste Speciali":[
-["Spremuta d’arancia (6€)","qtySpremuta"],
-["Toast prosciutto e formaggio (6€)","qtyToast"],
-["Pancake (6€)","qtyPancake"],
-["Yogurt greco (4€)","qtyYogurtGreco"],
-["Yogurt proteico (5€)","qtyYogurtProteico"],
-["Porridge (7€)","qtyPorridge"],
-["Take Away (25€)","qtyTakeAway"]
-]
-};
-
-// RENDER CATEGORIE
-document.getElementById("menuArea").innerHTML =
-  Object.entries(sezioni)
-    .map(([titolo, items]) => categoria(titolo, items))
-    .join("");
-
-// FUNZIONI + / -
 function inc(id){
  let el=document.getElementById(id);
  el.value=parseInt(el.value||0)+1;
@@ -190,67 +198,113 @@ function dec(id){
  let v=parseInt(el.value||0);
  if(v>0) el.value=v-1;
 }
+</script>
 
-// RACCOLTA PRODOTTI
-function getProdotti(){
-  let prodotti = {};
-  Object.values(sezioni).flat().forEach(([label,id])=>{
-    let q = parseInt(document.getElementById(id).value||0);
-    if(q>0){
-      prodotti[label] = q;
-    }
-  });
-  return prodotti;
-}
+<div id="menuArea"></div>
 
-// INVIA ORDINE
-async function inviaOrdine(){
+<script>
+const sezioni = {
+"Bevande Calde":[
+["Caffè espresso","qty1"],
+["Caffè Americano","qty2"],
+["Tè","qty3"],
+["Cioccolata calda","qty4"],
+["Cappuccino","qty5"],
+["Cappuccino Soia","qty6"],
+["Cappuccino No Lattosio","qty7"]
+],
+"Bevande Fredde":[
+["Latte","qty8"],
+["Latte di Soia","qty9"],
+["Latte No Lattosio","qty10"],
+["Succo arancia","qty11"],
+["Succo ananas","qty12"],
+["Succo frutti rossi","qty13"]
+],
+"Yogurt":[
+["Yogurt bianco","qty14"],
+["Yogurt ai frutti","qty15"]
+],
+"Dolci":[
+["Cornetto","qty16"],
+["Dolce artigianale","qty17"],
+["Fette biscottate","qty18"],
+["Burro","qty19"],
+["Marmellata","qty20"],
+["Nutella","qty21"],
+["Cereali","qty22"]
+],
+"Salati":[
+["Uova bollite","qty23"],
+["Uova strapazzate","qty24"],
+["Salumi","qty25"],
+["Formaggio","qty26"],
+["Pane","qty27"],
+["Focaccia","qty28"]
+],
+"Frutta":[
+["Frutta fresca","qty29"]
+],
+"Richieste Speciali":[
+["Spremuta d’arancia (6€)","qty30"],
+["Toast prosciutto e formaggio (6€)","qty31"],
+["Pancake (6€)","qty32"],
+["Yogurt greco (4€)","qty33"],
+["Yogurt proteico (5€)","qty34"],
+["Porridge (7€)","qty35"],
+["Take Away (25€)","qty36"]
+]
+};
 
-  const nome = document.getElementById("nome").value.trim();
-  const camera = document.getElementById("camera").value;
-  const orario = document.getElementById("orario").value;
+document.getElementById("menuArea").innerHTML =
+  Object.entries(sezioni)
+    .map(([t, items]) => categoria(t, items))
+    .join("");
 
-  if(!nome || !camera || !orario){
-    alert("Compila nome, camera e orario.");
-    return;
-  }
+function generaWhatsApp(){
+ const nome=document.getElementById("nome").value.trim();
+ const camera=document.getElementById("camera").value;
+ const orario=document.getElementById("orario").value;
 
-  const prodotti = getProdotti();
-  if(Object.keys(prodotti).length === 0){
-    alert("Seleziona almeno un prodotto.");
-    return;
-  }
+ if(!nome||!camera||!orario){
+   alert("Compila nome, camera e orario.");
+   return;
+ }
 
-  const oggi = new Date().toISOString().slice(0,10);
+ let prodotti=[];
+ Object.entries(sezioni).forEach(([cat, items])=>{
+   items.forEach(([label,id])=>{
+     let q=parseInt(document.getElementById(id).value||0);
+     if(q>0) prodotti.push(`- ${label}: ${q}`);
+   });
+ });
 
-  const ordine = {
-    data: oggi,
-    nome,
-    camera,
-    orario,
-    prodotti,
-    timestamp: new Date().toISOString()
-  };
+ if(prodotti.length===0){
+   alert("Seleziona almeno un prodotto.");
+   return;
+ }
 
-  const ok = await submitOrder(ordine);
+ let msg =
+`🍽️ ORDINE COLAZIONE
+━━━━━━━━━━━━━━━━━━
 
-  if(ok){
-    document.getElementById("okMsg").style.display="block";
-    window.scrollTo(0,0);
-  } else {
-    alert("Errore nell'invio dell'ordine.");
-  }
+👤 Nome: ${nome}
+🏠 Camera: ${camera}
+⏰ Orario: ${orario}
+
+📋 ORDINE:
+${prodotti.join("\n")}`;
+
+ let url = "https://wa.me/393283881366?text=" + encodeURIComponent(msg);
+ window.location.href = url;
 }
 </script>
 
-<button id="invio" onclick="inviaOrdine()">INVIA ORDINE</button>
+<button id="invio" onclick="generaWhatsApp()">INVIA ORDINE</button>
 
-<div id="okMsg">
-  ✔️ Ordine inviato con successo!
 </div>
-
-</div> <!-- container -->
 </body>
 </html>
+
 
 
