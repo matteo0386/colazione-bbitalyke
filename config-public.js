@@ -1,7 +1,8 @@
-// CONFIG PUBBLICA (NON contiene token)
+/*
+ * Configurazione pubblica per Ordini Colazione BB Italyke
+ * (NESSUN token qui dentro)
+ */
 
-const OWNER = "matteo0386";
-const REPO = "bbitalyke-orders";
-
-// Endpoint della GitHub Action (te lo fornisco tra poco)
-const ORDER_ENDPOINT = "https://api.github.com/repos/matteo0386/bbitalyke-orders/dispatches";
+const OWNER = "matteo0386";                     // tuo username GitHub
+const ORDERS_REPO = "bbitalyke-orders-public";  // repo pubblico ordini
+const ORDERS_DIR = "orders";                    // cartella ordini
