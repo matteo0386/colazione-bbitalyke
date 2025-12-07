@@ -5,6 +5,10 @@
 <title>BB Italyke – Colazione</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- Carica script per inviare ordini -->
+<script src="https://matteo0386.github.io/bbitalyke-orders/submitOrder.js"></script>
+<script src="https://matteo0386.github.io/bbitalyke-orders/config.js"></script>
+
 <style>
 :root {
  --primary:#0A84FF; --secondary:#5AC8FA; --accent:#FFD60A;
@@ -47,19 +51,22 @@ input.qty{
 }
 input[type=text],select{
  width:100%;max-width:280px;padding:10px;font-size:16px;
- border-radius:12px;border:2px solid var(--secondary);background:white;
+ border-radius:12px;border:2px solid var--)secondary);background:white;
 }
 #invio{
  width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);
  color:white;padding:16px;border:none;border-radius:999px;
  font-size:20px;font-weight:800;cursor:pointer;margin-top:20px;
 }
+#okMsg{
+ display:none;text-align:center;font-size:20px;font-weight:700;
+ color:#22c55e;margin-top:20px;
+}
 </style>
 </head>
 
 <body>
 <div class="container">
-
 <h1>BB Italyke – Colazione</h1>
 <p class="subtitle">Seleziona ciò che desideri</p>
 
@@ -85,363 +92,93 @@ input[type=text],select{
 <option value="09:00">09:00</option>
 </select>
 </div>
-<div class="card"><h2>Bevande Calde</h2>
-<div class='row'>
-<span class='label'>Caffè espresso</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyCaffeEspresso')">−</button>
-<input type='number' class='qty' id='qtyCaffeEspresso' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyCaffeEspresso')">+</button>
-</div>
-</div>
+<!-- CATEGORIE DEL MENU -->
+<script>
+function categoria(titolo, items){
+  let html = `<div class='card'><h2>${titolo}</h2>`;
+  items.forEach(([label, id])=>{
+    html += `
+      <div class='row'>
+        <span class='label'>${label}</span>
+        <div class='qty-box'>
+          <button type='button' class='pm' onclick="dec('${id}')">−</button>
+          <input type='number' class='qty' id='${id}' value='0' min='0'>
+          <button type='button' class='pm' onclick="inc('${id}')">+</button>
+        </div>
+      </div>`;
+  });
+  html += `</div>`;
+  return html;
+}
+</script>
 
-<div class='row'>
-<span class='label'>Caffè Americano</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyCaffeAmericano')">−</button>
-<input type='number' class='qty' id='qtyCaffeAmericano' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyCaffeAmericano')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Tè</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyThe')">−</button>
-<input type='number' class='qty' id='qtyThe' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyThe')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Cioccolata calda</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyCioccolataCalda')">−</button>
-<input type='number' class='qty' id='qtyCioccolataCalda' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyCioccolataCalda')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Cappuccino</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyCappuccino')">−</button>
-<input type='number' class='qty' id='qtyCappuccino' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyCappuccino')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Cappuccino Soia</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyCappuccinoSoia')">−</button>
-<input type='number' class='qty' id='qtyCappuccinoSoia' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyCappuccinoSoia')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Cappuccino No Lattosio</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyCappuccinoNoLattosio')">−</button>
-<input type='number' class='qty' id='qtyCappuccinoNoLattosio' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyCappuccinoNoLattosio')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Latte caldo</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyLatteCaldo')">−</button>
-<input type='number' class='qty' id='qtyLatteCaldo' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyLatteCaldo')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Latte di Soia</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyLatteSoiaCaldo')">−</button>
-<input type='number' class='qty' id='qtyLatteSoiaCaldo' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyLatteSoiaCaldo')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Latte No Lattosio</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyLatteNoLattosioCaldo')">−</button>
-<input type='number' class='qty' id='qtyLatteNoLattosioCaldo' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyLatteNoLattosioCaldo')">+</button>
-</div>
-</div>
-</div><div class="card"><h2>Bevande Fredde</h2>
-<div class='row'>
-<span class='label'>Latte</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyLatteFreddo')">−</button>
-<input type='number' class='qty' id='qtyLatteFreddo' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyLatteFreddo')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Latte di Soia</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyLatteSoiaFreddo')">−</button>
-<input type='number' class='qty' id='qtyLatteSoiaFreddo' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyLatteSoiaFreddo')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Latte No Lattosio</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyLatteNoLattosioFreddo')">−</button>
-<input type='number' class='qty' id='qtyLatteNoLattosioFreddo' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyLatteNoLattosioFreddo')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Succo arancia</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtySuccoArancio')">−</button>
-<input type='number' class='qty' id='qtySuccoArancio' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtySuccoArancio')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Succo ananas</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtySuccoAnanas')">−</button>
-<input type='number' class='qty' id='qtySuccoAnanas' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtySuccoAnanas')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Succo frutti rossi</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtySuccoFruttiRossi')">−</button>
-<input type='number' class='qty' id='qtySuccoFruttiRossi' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtySuccoFruttiRossi')">+</button>
-</div>
-</div>
-</div><div class="card"><h2>Yogurt</h2>
-<div class='row'>
-<span class='label'>Yogurt bianco</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyYogurtBianco')">−</button>
-<input type='number' class='qty' id='qtyYogurtBianco' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyYogurtBianco')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Yogurt ai frutti</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyYogurtFrutti')">−</button>
-<input type='number' class='qty' id='qtyYogurtFrutti' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyYogurtFrutti')">+</button>
-</div>
-</div>
-</div><div class="card"><h2>Dolci</h2>
-<div class='row'>
-<span class='label'>Cornetto</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyCornetto')">−</button>
-<input type='number' class='qty' id='qtyCornetto' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyCornetto')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Dolce artigianale</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyDolceArtigianale')">−</button>
-<input type='number' class='qty' id='qtyDolceArtigianale' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyDolceArtigianale')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Fette biscottate</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyFetteBiscottate')">−</button>
-<input type='number' class='qty' id='qtyFetteBiscottate' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyFetteBiscottate')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Burro</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyBurro')">−</button>
-<input type='number' class='qty' id='qtyBurro' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyBurro')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Marmellata</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyMarmellata')">−</button>
-<input type='number' class='qty' id='qtyMarmellata' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyMarmellata')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Nutella</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyNutella')">−</button>
-<input type='number' class='qty' id='qtyNutella' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyNutella')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Cereali</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyCereali')">−</button>
-<input type='number' class='qty' id='qtyCereali' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyCereali')">+</button>
-</div>
-</div>
-</div><div class="card"><h2>Salati</h2>
-<div class='row'>
-<span class='label'>Uova bollite</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyUovaBollite')">−</button>
-<input type='number' class='qty' id='qtyUovaBollite' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyUovaBollite')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Uova strapazzate</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyUovaStrapazzate')">−</button>
-<input type='number' class='qty' id='qtyUovaStrapazzate' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyUovaStrapazzate')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Salumi</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtySalumi')">−</button>
-<input type='number' class='qty' id='qtySalumi' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtySalumi')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Formaggio</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyFormaggio')">−</button>
-<input type='number' class='qty' id='qtyFormaggio' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyFormaggio')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Pane</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyPane')">−</button>
-<input type='number' class='qty' id='qtyPane' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyPane')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Focaccia</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyFocaccia')">−</button>
-<input type='number' class='qty' id='qtyFocaccia' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyFocaccia')">+</button>
-</div>
-</div>
-</div><div class="card"><h2>Frutta</h2>
-<div class='row'>
-<span class='label'>Frutta fresca</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyFruttaFresca')">−</button>
-<input type='number' class='qty' id='qtyFruttaFresca' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyFruttaFresca')">+</button>
-</div>
-</div>
-</div><div class="card"><h2>Richieste Speciali</h2>
-<div class='row'>
-<span class='label'>Spremuta d’arancia (6€)</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtySpremuta')">−</button>
-<input type='number' class='qty' id='qtySpremuta' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtySpremuta')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Toast prosciutto e formaggio (6€)</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyToast')">−</button>
-<input type='number' class='qty' id='qtyToast' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyToast')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Pancake (6€)</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyPancake')">−</button>
-<input type='number' class='qty' id='qtyPancake' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyPancake')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Yogurt greco (4€)</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyYogurtGreco')">−</button>
-<input type='number' class='qty' id='qtyYogurtGreco' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyYogurtGreco')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Yogurt proteico (5€)</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyYogurtProteico')">−</button>
-<input type='number' class='qty' id='qtyYogurtProteico' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyYogurtProteico')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Porridge (7€)</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyPorridge')">−</button>
-<input type='number' class='qty' id='qtyPorridge' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyPorridge')">+</button>
-</div>
-</div>
-
-<div class='row'>
-<span class='label'>Take Away (25€)</span>
-<div class='qty-box'>
-<button type='button' class='pm' onclick="dec('qtyTakeAway')">−</button>
-<input type='number' class='qty' id='qtyTakeAway' value='0' min='0'>
-<button type='button' class='pm' onclick="inc('qtyTakeAway')">+</button>
-</div>
-</div>
-</div>
-<button id="invio" onclick="invia()">INVIA ORDINE VIA WHATSAPP</button>
-
-</div>
+<div id="menuArea"></div>
 
 <script>
+// DEFINIZIONE CATEGORIE
+const sezioni = {
+"Bevande Calde":[
+["Caffè espresso","qtyCaffeEspresso"],
+["Caffè Americano","qtyCaffeAmericano"],
+["Tè","qtyThe"],
+["Cioccolata calda","qtyCioccolataCalda"],
+["Cappuccino","qtyCappuccino"],
+["Cappuccino Soia","qtyCappuccinoSoia"],
+["Cappuccino No Lattosio","qtyCappuccinoNoLattosio"],
+["Latte caldo","qtyLatteCaldo"],
+["Latte di Soia","qtyLatteSoiaCaldo"],
+["Latte No Lattosio","qtyLatteNoLattosioCaldo"]
+],
+"Bevande Fredde":[
+["Latte","qtyLatteFreddo"],
+["Latte di Soia","qtyLatteSoiaFreddo"],
+["Latte No Lattosio","qtyLatteNoLattosioFreddo"],
+["Succo arancia","qtySuccoArancio"],
+["Succo ananas","qtySuccoAnanas"],
+["Succo frutti rossi","qtySuccoFruttiRossi"]
+],
+"Yogurt":[
+["Yogurt bianco","qtyYogurtBianco"],
+["Yogurt ai frutti","qtyYogurtFrutti"]
+],
+"Dolci":[
+["Cornetto","qtyCornetto"],
+["Dolce artigianale","qtyDolceArtigianale"],
+["Fette biscottate","qtyFetteBiscottate"],
+["Burro","qtyBurro"],
+["Marmellata","qtyMarmellata"],
+["Nutella","qtyNutella"],
+["Cereali","qtyCereali"]
+],
+"Salati":[
+["Uova bollite","qtyUovaBollite"],
+["Uova strapazzate","qtyUovaStrapazzate"],
+["Salumi","qtySalumi"],
+["Formaggio","qtyFormaggio"],
+["Pane","qtyPane"],
+["Focaccia","qtyFocaccia"]
+],
+"Frutta":[
+["Frutta fresca","qtyFruttaFresca"]
+],
+"Richieste Speciali":[
+["Spremuta d’arancia (6€)","qtySpremuta"],
+["Toast prosciutto e formaggio (6€)","qtyToast"],
+["Pancake (6€)","qtyPancake"],
+["Yogurt greco (4€)","qtyYogurtGreco"],
+["Yogurt proteico (5€)","qtyYogurtProteico"],
+["Porridge (7€)","qtyPorridge"],
+["Take Away (25€)","qtyTakeAway"]
+]
+};
+
+// RENDER CATEGORIE
+document.getElementById("menuArea").innerHTML =
+  Object.entries(sezioni)
+    .map(([titolo, items]) => categoria(titolo, items))
+    .join("");
+
+// FUNZIONI + / -
 function inc(id){
  let el=document.getElementById(id);
  el.value=parseInt(el.value||0)+1;
@@ -451,67 +188,66 @@ function dec(id){
  let v=parseInt(el.value||0);
  if(v>0) el.value=v-1;
 }
-function riga(id,nome){
- let v=parseInt(document.getElementById(id).value||0);
- return v>0 ? "- "+nome+": "+v+"\n" : "";
+
+// RACCOLTA PRODOTTI
+function getProdotti(){
+  let prodotti = {};
+  Object.values(sezioni).flat().forEach(([label,id])=>{
+    let q = parseInt(document.getElementById(id).value||0);
+    if(q>0){
+      prodotti[label] = q;
+    }
+  });
+  return prodotti;
 }
 
-function invia(){
- let numero="393923048053";
- let nome=document.getElementById("nome").value;
- let camera=document.getElementById("camera").value;
- let orario=document.getElementById("orario").value;
+// INVIO ORDINE AL SISTEMA
+async function inviaOrdine(){
+  const nome = document.getElementById("nome").value.trim();
+  const camera = document.getElementById("camera").value;
+  const orario = document.getElementById("orario").value;
 
- let msg="🍽️ ORDINE COLAZIONE\n";
- msg+="━━━━━━━━━━━━━━━━━━\n\n";
- msg+="👤 Nome: "+nome+"\n";
- msg+="🏠 Camera: "+camera+"\n";
- msg+="⏰ Orario: "+orario+"\n\n";
- msg+="📋 ORDINE:\n";
-msg+=riga("qtyCaffeEspresso","Caffè espresso");
-msg+=riga("qtyCaffeAmericano","Caffè Americano");
-msg+=riga("qtyThe","Tè");
-msg+=riga("qtyCioccolataCalda","Cioccolata calda");
-msg+=riga("qtyCappuccino","Cappuccino");
-msg+=riga("qtyCappuccinoSoia","Cappuccino Soia");
-msg+=riga("qtyCappuccinoNoLattosio","Cappuccino No Lattosio");
-msg+=riga("qtyLatteCaldo","Latte caldo");
-msg+=riga("qtyLatteSoiaCaldo","Latte di Soia");
-msg+=riga("qtyLatteNoLattosioCaldo","Latte No Lattosio");
-msg+=riga("qtyLatteFreddo","Latte");
-msg+=riga("qtyLatteSoiaFreddo","Latte di Soia");
-msg+=riga("qtyLatteNoLattosioFreddo","Latte No Lattosio");
-msg+=riga("qtySuccoArancio","Succo arancia");
-msg+=riga("qtySuccoAnanas","Succo ananas");
-msg+=riga("qtySuccoFruttiRossi","Succo frutti rossi");
-msg+=riga("qtyYogurtBianco","Yogurt bianco");
-msg+=riga("qtyYogurtFrutti","Yogurt ai frutti");
-msg+=riga("qtyCornetto","Cornetto");
-msg+=riga("qtyDolceArtigianale","Dolce artigianale");
-msg+=riga("qtyFetteBiscottate","Fette biscottate");
-msg+=riga("qtyBurro","Burro");
-msg+=riga("qtyMarmellata","Marmellata");
-msg+=riga("qtyNutella","Nutella");
-msg+=riga("qtyCereali","Cereali");
-msg+=riga("qtyUovaBollite","Uova bollite");
-msg+=riga("qtyUovaStrapazzate","Uova strapazzate");
-msg+=riga("qtySalumi","Salumi");
-msg+=riga("qtyFormaggio","Formaggio");
-msg+=riga("qtyPane","Pane");
-msg+=riga("qtyFocaccia","Focaccia");
-msg+=riga("qtyFruttaFresca","Frutta fresca");
-msg+=riga("qtySpremuta","Spremuta d’arancia (6€)");
-msg+=riga("qtyToast","Toast prosciutto e formaggio (6€)");
-msg+=riga("qtyPancake","Pancake (6€)");
-msg+=riga("qtyYogurtGreco","Yogurt greco (4€)");
-msg+=riga("qtyYogurtProteico","Yogurt proteico (5€)");
-msg+=riga("qtyPorridge","Porridge (7€)");
-msg+=riga("qtyTakeAway","Take Away (25€)");
+  if(!nome || !camera || !orario){
+    alert("Compila tutti i campi: nome, camera e orario.");
+    return;
+  }
 
- let url="https://api.whatsapp.com/send?phone="+numero+"&text="+encodeURIComponent(msg);
- window.location.href=url;
+  const prodotti = getProdotti();
+
+  if(Object.keys(prodotti).length === 0){
+    alert("Seleziona almeno un prodotto.");
+    return;
+  }
+
+  // COSTRUISCO L’OGGETTO ORDINE
+  const oggi = new Date().toISOString().slice(0,10);
+  const ordine = {
+    data: oggi,
+    nome,
+    camera,
+    orario,
+    prodotti,
+    timestamp: new Date().toISOString()
+  };
+
+  const ok = await submitOrder(ordine);
+
+  if(ok){
+    document.getElementById("okMsg").style.display="block";
+    window.scrollTo(0,0);
+  } else {
+    alert("Errore nell'invio dell'ordine. Riprova.");
+  }
 }
 </script>
 
+<button id="invio" onclick="inviaOrdine()">INVIA ORDINE</button>
+
+<div id="okMsg">
+  ✔️ Ordine inviato con successo!
+</div>
+
+</div> <!-- container -->
 </body>
 </html>
+
