@@ -6,260 +6,306 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+/* ===========================
+   THEME + COLORS
+=========================== */
 :root {
+ --blue-bg:#0A1A3D;
+ --card:#FFFFFF;
+ --text:#1C1C1E;
  --primary:#0A84FF;
  --secondary:#5AC8FA;
- --accent:#FFD60A;
- --bg:#f4f7fb;
- --card:#ffffff;
- --text:#222;
- --radius:18px;
- --shadow:0 6px 18px rgba(0,0,0,.1);
+ --radius:22px;
+ --shadow:0 10px 25px rgba(0,0,0,0.25);
 }
 
-@media(prefers-color-scheme:dark){
- :root{
-   --bg:#050816;
-   --card:#111827;
-   --text:#f2f2f7;
-   --shadow:0 8px 24px rgba(0,0,0,.45);
+@media (prefers-color-scheme:dark){
+ :root {
+   --card:#1C1C1E;
+   --text:#F2F2F7;
+   --shadow:0 8px 30px rgba(0,0,0,0.6);
  }
 }
 
+/* ===========================
+   GLOBAL
+=========================== */
 body{
- margin:0;padding:0;
- background:var(--bg);
- font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial;
+ margin:0;
+ padding:0;
+ background:var(--blue-bg);
+ font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto;
  color:var(--text);
 }
 
 .container{
- max-width:430px;
- margin:auto;
+ max-width:420px;
+ margin:0 auto;
  padding:20px;
 }
 
-h1{
+/* ===========================
+   NAVBAR IOS
+=========================== */
+.navbar{
  text-align:center;
- font-size:32px;
- margin-bottom:0;
- color:var(--primary);
- font-weight:800;
+ padding:22px 10px 14px;
+ color:white;
+ font-size:26px;
+ font-weight:700;
+ letter-spacing:0.5px;
 }
 
-.subtitle{
- text-align:center;
- font-size:15px;
- margin-bottom:22px;
- color:#888;
-}
-
+/* ===========================
+   CARDS
+=========================== */
 .card{
  background:var(--card);
- padding:18px;
- margin-bottom:18px;
+ padding:20px;
+ margin-bottom:22px;
  border-radius:var(--radius);
  box-shadow:var(--shadow);
- transform:scale(0.98);
- animation:fadeIn .5s forwards;
+ opacity:0;
+ transform:translateY(20px) scale(0.97);
+ animation:fadeInCard .5s forwards;
 }
 
-@keyframes fadeIn { to { transform:scale(1); opacity:1; } }
+@keyframes fadeInCard{
+ to { opacity:1; transform:translateY(0) scale(1); }
+}
 
-h2{
- margin:0 0 10px;
+.card-title{
+ display:flex;
+ align-items:center;
+ gap:12px;
  font-size:20px;
- color:var(--primary);
+ font-weight:700;
+ margin-bottom:14px;
 }
 
+/* Icone animate stile iOS */
+.icon{
+ font-size:26px;
+ display:inline-block;
+ transform:scale(0.8);
+ animation:pop .5s ease forwards;
+}
+@keyframes pop {
+ 0% { transform:scale(0.5); opacity:0; }
+ 100% { transform:scale(1); opacity:1; }
+}
+
+/* ===========================
+   INPUT E SELECT
+=========================== */
+input[type=text], select{
+ width:80%;       /* PIÙ STRETTO */
+ margin:0 auto;
+ display:block;
+ padding:12px;
+ font-size:17px;
+ border-radius:14px;
+ border:none;
+ background:#F2F2F7;
+}
+
+label{
+ margin-top:10px;
+ display:block;
+ text-align:center;
+ font-size:15px;
+ color:#D0D3DA;
+}
+
+/* ===========================
+   RIGHE + QUANTITÀ
+=========================== */
 .row{
  display:flex;
  justify-content:space-between;
  align-items:center;
- padding:8px 0;
- border-bottom:1px solid #e5e7eb22;
+ padding:9px 0;
+ border-bottom:1px solid #E5E5EA44;
 }
-
 .row:last-child{ border-bottom:none; }
-
-.label{ width:60%; }
 
 .qty-box{
  display:flex;
  align-items:center;
- gap:6px;
+ gap:8px;
 }
 
 button.pm{
- width:32px;
- height:32px;
+ width:34px;
+ height:34px;
  border-radius:50%;
  border:none;
- background:linear-gradient(135deg,var(--secondary),var(--primary));
- color:white;
  font-size:20px;
- font-weight:800;
+ color:white;
+ background:var(--primary);
  cursor:pointer;
 }
 
 input.qty{
- width:48px;
+ width:44px;
  padding:6px;
- font-size:16px;
  text-align:center;
- border-radius:10px;
- border:2px solid var(--secondary);
-}
-
-input[type=text], select{
- width:100%;
- padding:12px;
- margin-bottom:12px;
- border-radius:12px;
- border:2px solid var(--secondary);
- background:white;
  font-size:16px;
+ border-radius:10px;
+ border:2px solid var(--primary);
 }
 
+/* ===========================
+   SUBMIT BUTTON
+=========================== */
 #invio{
  width:100%;
- padding:18px;
- background:linear-gradient(135deg,#22c55e,#16a34a);
+ background:#34C759;
  color:white;
- font-size:20px;
+ padding:16px;
+ border-radius:22px;
  font-weight:800;
  border:none;
- border-radius:999px;
- margin-top:15px;
+ font-size:20px;
+ margin-top:10px;
  cursor:pointer;
 }
-
 #invio:active{
  transform:scale(0.97);
 }
-
 </style>
 </head>
 
 <body>
+
+<div class="navbar">BB Italyke</div>
+
 <div class="container">
 
-<h1>BB Italyke</h1>
-<p class="subtitle">Ordina la tua colazione</p>
-
+<!-- ===========================
+     DATI OSPITE
+=========================== -->
 <div class="card">
-<h2>Dati Ospite</h2>
+ <div class="card-title"><span class="icon">👤</span>Dati Ospite</div>
 
-<label>Nome</label>
-<input type="text" id="nome">
+ <label>Nome</label>
+ <input type="text" id="nome">
 
-<label>Camera</label>
-<select id="camera">
- <option value="">Seleziona</option>
- <option value="Euterpe">Euterpe</option>
- <option value="Talia">Talia</option>
- <option value="Tersicore">Tersicore</option>
- <option value="Erato">Erato</option>
-</select>
+ <label>Camera</label>
+ <select id="camera">
+   <option value="">Seleziona</option>
+   <option value="Euterpe">Euterpe</option>
+   <option value="Talia">Talia</option>
+   <option value="Tersicore">Tersicore</option>
+   <option value="Erato">Erato</option>
+ </select>
 
-<label>Orario</label>
-<select id="orario">
- <option value="">Seleziona</option>
- <option value="08:00">08:00</option>
- <option value="09:00">09:00</option>
-</select>
-
+ <label>Orario</label>
+ <select id="orario">
+   <option value="">Seleziona</option>
+   <option value="08:00">08:00</option>
+   <option value="09:00">09:00</option>
+ </select>
 </div>
 
 <script>
-function categoria(titolo, items){
- let html = `<div class='card'><h2>${titolo}</h2>`;
- items.forEach(([label, id])=>{
+function categoria(titolo, icona, items){
+ let html = `
+ <div class='card'>
+   <div class='card-title'>
+     <span class="icon">${icona}</span>${titolo}
+   </div>
+ `;
+
+ items.forEach(([label,id])=>{
    html += `
-     <div class='row'>
-       <span class='label'>${label}</span>
-       <div class='qty-box'>
-         <button type='button' class='pm' onclick="dec('${id}')">−</button>
-         <input type='number' class='qty' id='${id}' value='0'>
-         <button type='button' class='pm' onclick="inc('${id}')">+</button>
-       </div>
-     </div>`;
+   <div class="row">
+     <span>${label}</span>
+     <div class="qty-box">
+       <button type="button" class="pm" onclick="dec('${id}')">−</button>
+       <input type="number" id="${id}" class="qty" value="0">
+       <button type="button" class="pm" onclick="inc('${id}')">+</button>
+     </div>
+   </div>`;
  });
- html += `</div>`;
+
+ html += "</div>";
  return html;
 }
 
 function inc(id){
- let el=document.getElementById(id);
- el.value=parseInt(el.value||0)+1;
+ let el = document.getElementById(id);
+ el.value = parseInt(el.value || 0) + 1;
 }
+
 function dec(id){
- let el=document.getElementById(id);
- let v=parseInt(el.value||0);
- if(v>0) el.value=v-1;
+ let el = document.getElementById(id);
+ let v = parseInt(el.value || 0);
+ if(v>0) el.value = v - 1;
 }
 </script>
 
+<!-- ===========================
+     MENU
+=========================== -->
 <div id="menuArea"></div>
 
 <script>
-const sezioni = {
-"Bevande Calde":[
-["Caffè espresso","qty1"],
-["Caffè Americano","qty2"],
-["Tè","qty3"],
-["Cioccolata calda","qty4"],
-["Cappuccino","qty5"],
-["Cappuccino Soia","qty6"],
-["Cappuccino No Lattosio","qty7"]
-],
-"Bevande Fredde":[
-["Latte","qty8"],
-["Latte di Soia","qty9"],
-["Latte No Lattosio","qty10"],
-["Succo arancia","qty11"],
-["Succo ananas","qty12"],
-["Succo frutti rossi","qty13"]
-],
-"Yogurt":[
-["Yogurt bianco","qty14"],
-["Yogurt ai frutti","qty15"]
-],
-"Dolci":[
-["Cornetto","qty16"],
-["Dolce artigianale","qty17"],
-["Fette biscottate","qty18"],
-["Burro","qty19"],
-["Marmellata","qty20"],
-["Nutella","qty21"],
-["Cereali","qty22"]
-],
-"Salati":[
-["Uova bollite","qty23"],
-["Uova strapazzate","qty24"],
-["Salumi","qty25"],
-["Formaggio","qty26"],
-["Pane","qty27"],
-["Focaccia","qty28"]
-],
-"Frutta":[
-["Frutta fresca","qty29"]
-],
-"Richieste Speciali":[
-["Spremuta d’arancia (6€)","qty30"],
-["Toast prosciutto e formaggio (6€)","qty31"],
-["Pancake (6€)","qty32"],
-["Yogurt greco (4€)","qty33"],
-["Yogurt proteico (5€)","qty34"],
-["Porridge (7€)","qty35"],
-["Take Away (25€)","qty36"]
-]
-};
+const sezioni = [
+ ["Bevande Calde","☕",[
+   ["Caffè espresso","q1"],
+   ["Caffè Americano","q2"],
+   ["Tè","q3"],
+   ["Cioccolata calda","q4"],
+   ["Cappuccino","q5"],
+   ["Cappuccino Soia","q6"],
+   ["Cappuccino No Lattosio","q7"]
+ ]],
+ ["Bevande Fredde","🥤",[
+   ["Latte","q8"],
+   ["Latte di Soia","q9"],
+   ["Latte No Lattosio","q10"],
+   ["Succo arancia","q11"],
+   ["Succo ananas","q12"],
+   ["Succo frutti rossi","q13"]
+ ]],
+ ["Yogurt","🍶",[
+   ["Yogurt bianco","q14"],
+   ["Yogurt ai frutti","q15"]
+ ]],
+ ["Dolci","🍞",[
+   ["Cornetto","q16"],
+   ["Dolce artigianale","q17"],
+   ["Fette biscottate","q18"],
+   ["Burro","q19"],
+   ["Marmellata","q20"],
+   ["Nutella","q21"],
+   ["Cereali","q22"]
+ ]],
+ ["Salati","🥓",[
+   ["Uova bollite","q23"],
+   ["Uova strapazzate","q24"],
+   ["Salumi","q25"],
+   ["Formaggio","q26"],
+   ["Pane","q27"],
+   ["Focaccia","q28"]
+ ]],
+ ["Frutta","🍎",[
+   ["Frutta fresca","q29"]
+ ]],
+ ["Richieste Speciali","⭐",[
+   ["Spremuta d’arancia (6€)","q30"],
+   ["Toast prosciutto e formaggio (6€)","q31"],
+   ["Pancake (6€)","q32"],
+   ["Yogurt greco (4€)","q33"],
+   ["Yogurt proteico (5€)","q34"],
+   ["Porridge (7€)","q35"],
+   ["Take Away (25€)","q36"]
+ ]]
+];
 
 document.getElementById("menuArea").innerHTML =
-  Object.entries(sezioni)
-    .map(([t, items]) => categoria(t, items))
-    .join("");
+  sezioni.map(([titolo, icona, items]) => categoria(titolo, icona, items)).join("");
 
 function generaWhatsApp(){
  const nome=document.getElementById("nome").value.trim();
@@ -272,7 +318,7 @@ function generaWhatsApp(){
  }
 
  let prodotti=[];
- Object.entries(sezioni).forEach(([cat, items])=>{
+ sezioni.forEach(([_,__,items])=>{
    items.forEach(([label,id])=>{
      let q=parseInt(document.getElementById(id).value||0);
      if(q>0) prodotti.push(`- ${label}: ${q}`);
@@ -295,8 +341,8 @@ function generaWhatsApp(){
 📋 ORDINE:
 ${prodotti.join("\n")}`;
 
- let url = "https://wa.me/393283881366?text=" + encodeURIComponent(msg);
- window.location.href = url;
+ let url="https://wa.me/393283881366?text="+encodeURIComponent(msg);
+ window.location.href=url;
 }
 </script>
 
@@ -305,6 +351,7 @@ ${prodotti.join("\n")}`;
 </div>
 </body>
 </html>
+
 
 
 
