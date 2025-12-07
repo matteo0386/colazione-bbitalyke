@@ -67,7 +67,7 @@ body{
  box-shadow:var(--shadow);
  opacity:0;
  transform:translateY(20px) scale(0.97);
- animation:fadeInCard .5s forwards;
+ animation:fadeInCard .45s forwards;
 }
 
 @keyframes fadeInCard{
@@ -87,20 +87,28 @@ body{
 .icon{
  font-size:26px;
  display:inline-block;
- transform:scale(0.8);
+ transform:scale(0.7);
  animation:pop .5s ease forwards;
 }
 @keyframes pop {
- 0% { transform:scale(0.5); opacity:0; }
+ 0% { transform:scale(0.4); opacity:0; }
  100% { transform:scale(1); opacity:1; }
 }
 
 /* ===========================
-   INPUT E SELECT
+   INPUT BOX UNIFORMI
 =========================== */
-input[type=text], select{
- width:80%;       /* PIÙ STRETTO */
- margin:0 auto;
+label{
+ margin-top:10px;
+ display:block;
+ text-align:center;
+ font-size:15px;
+ color:#D0D3DA;
+}
+
+.input-box {
+ width:85%;
+ margin:12px auto;
  display:block;
  padding:12px;
  font-size:17px;
@@ -109,12 +117,9 @@ input[type=text], select{
  background:#F2F2F7;
 }
 
-label{
- margin-top:10px;
- display:block;
- text-align:center;
- font-size:15px;
- color:#D0D3DA;
+textarea.input-box {
+ resize:none;
+ height:80px;
 }
 
 /* ===========================
@@ -127,6 +132,7 @@ label{
  padding:9px 0;
  border-bottom:1px solid #E5E5EA44;
 }
+
 .row:last-child{ border-bottom:none; }
 
 .qty-box{
@@ -170,6 +176,7 @@ input.qty{
  margin-top:10px;
  cursor:pointer;
 }
+
 #invio:active{
  transform:scale(0.97);
 }
@@ -189,10 +196,10 @@ input.qty{
  <div class="card-title"><span class="icon">👤</span>Dati Ospite</div>
 
  <label>Nome</label>
- <input type="text" id="nome">
+ <input type="text" id="nome" class="input-box">
 
  <label>Camera</label>
- <select id="camera">
+ <select id="camera" class="input-box">
    <option value="">Seleziona</option>
    <option value="Euterpe">Euterpe</option>
    <option value="Talia">Talia</option>
@@ -201,11 +208,14 @@ input.qty{
  </select>
 
  <label>Orario</label>
- <select id="orario">
+ <select id="orario" class="input-box">
    <option value="">Seleziona</option>
    <option value="08:00">08:00</option>
    <option value="09:00">09:00</option>
  </select>
+
+ <label>Note (opzionale)</label>
+ <textarea id="note" class="input-box" placeholder="Es: senza zucchero, allergie, preferenze..."></textarea>
 </div>
 
 <script>
@@ -234,19 +244,19 @@ function categoria(titolo, icona, items){
 }
 
 function inc(id){
- let el = document.getElementById(id);
- el.value = parseInt(el.value || 0) + 1;
+ let el=document.getElementById(id);
+ el.value=parseInt(el.value||0)+1;
 }
 
 function dec(id){
- let el = document.getElementById(id);
- let v = parseInt(el.value || 0);
- if(v>0) el.value = v - 1;
+ let el=document.getElementById(id);
+ let v=parseInt(el.value||0);
+ if(v>0) el.value=v-1;
 }
 </script>
 
 <!-- ===========================
-     MENU
+     SEZIONI MENU
 =========================== -->
 <div id="menuArea"></div>
 
@@ -305,12 +315,14 @@ const sezioni = [
 ];
 
 document.getElementById("menuArea").innerHTML =
-  sezioni.map(([titolo, icona, items]) => categoria(titolo, icona, items)).join("");
+ sezioni.map(([titolo, icona, items]) => categoria(titolo, icona, items)).join("");
+
 
 function generaWhatsApp(){
  const nome=document.getElementById("nome").value.trim();
  const camera=document.getElementById("camera").value;
  const orario=document.getElementById("orario").value;
+ const note=document.getElementById("note").value.trim();
 
  if(!nome||!camera||!orario){
    alert("Compila nome, camera e orario.");
@@ -330,6 +342,8 @@ function generaWhatsApp(){
    return;
  }
 
+ let noteText = note ? `\n📝 Note:\n${note}\n` : "";
+
  let msg =
 `🍽️ ORDINE COLAZIONE
 ━━━━━━━━━━━━━━━━━━
@@ -339,7 +353,7 @@ function generaWhatsApp(){
 ⏰ Orario: ${orario}
 
 📋 ORDINE:
-${prodotti.join("\n")}`;
+${prodotti.join("\n")}${noteText}`;
 
  let url="https://wa.me/393923048053?text="+encodeURIComponent(msg);
  window.location.href=url;
@@ -351,6 +365,7 @@ ${prodotti.join("\n")}`;
 </div>
 </body>
 </html>
+
 
 
 
