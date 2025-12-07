@@ -5,9 +5,9 @@
 <title>BB Italyke – Colazione</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Carica script per inviare ordini -->
-<script src="https://matteo0386.github.io/bbitalyke-orders/submitOrder.js"></script>
-<script src="https://matteo0386.github.io/bbitalyke-orders/config.js"></script>
+<!-- CONFIG PUBLICA + LOGICA ORDINI -->
+<script src="config-public.js"></script>
+<script src="submitOrder.js"></script>
 
 <style>
 :root {
@@ -51,7 +51,7 @@ input.qty{
 }
 input[type=text],select{
  width:100%;max-width:280px;padding:10px;font-size:16px;
- border-radius:12px;border:2px solid var--)secondary);background:white;
+ border-radius:12px;border:2px solid var(--secondary);background:white;
 }
 #invio{
  width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);
@@ -67,6 +67,7 @@ input[type=text],select{
 
 <body>
 <div class="container">
+
 <h1>BB Italyke – Colazione</h1>
 <p class="subtitle">Seleziona ciò che desideri</p>
 
@@ -91,8 +92,9 @@ input[type=text],select{
 <option value="08:00">08:00</option>
 <option value="09:00">09:00</option>
 </select>
+
 </div>
-<!-- CATEGORIE DEL MENU -->
+<!-- GENERATORE CATEGORIE -->
 <script>
 function categoria(titolo, items){
   let html = `<div class='card'><h2>${titolo}</h2>`;
@@ -115,7 +117,7 @@ function categoria(titolo, items){
 <div id="menuArea"></div>
 
 <script>
-// DEFINIZIONE CATEGORIE
+// DEFINIZIONE CATEGORIE E PRODOTTI
 const sezioni = {
 "Bevande Calde":[
 ["Caffè espresso","qtyCaffeEspresso"],
@@ -201,26 +203,26 @@ function getProdotti(){
   return prodotti;
 }
 
-// INVIO ORDINE AL SISTEMA
+// INVIA ORDINE
 async function inviaOrdine(){
+
   const nome = document.getElementById("nome").value.trim();
   const camera = document.getElementById("camera").value;
   const orario = document.getElementById("orario").value;
 
   if(!nome || !camera || !orario){
-    alert("Compila tutti i campi: nome, camera e orario.");
+    alert("Compila nome, camera e orario.");
     return;
   }
 
   const prodotti = getProdotti();
-
   if(Object.keys(prodotti).length === 0){
     alert("Seleziona almeno un prodotto.");
     return;
   }
 
-  // COSTRUISCO L’OGGETTO ORDINE
   const oggi = new Date().toISOString().slice(0,10);
+
   const ordine = {
     data: oggi,
     nome,
@@ -236,7 +238,7 @@ async function inviaOrdine(){
     document.getElementById("okMsg").style.display="block";
     window.scrollTo(0,0);
   } else {
-    alert("Errore nell'invio dell'ordine. Riprova.");
+    alert("Errore nell'invio dell'ordine.");
   }
 }
 </script>
@@ -250,4 +252,5 @@ async function inviaOrdine(){
 </div> <!-- container -->
 </body>
 </html>
+
 
